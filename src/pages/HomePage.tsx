@@ -1,6 +1,6 @@
 // src/pages/HomePage.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
 const HomePage: React.FC = () => {
@@ -11,15 +11,15 @@ const HomePage: React.FC = () => {
                 <div className="background-image"></div> {/* Фоновая картинка */}
                 <h1 className="page-title">Платные дороги</h1>
                 <div className="button-container">
-                    <Link to="/roads" className="btn btn-left">
+                    {/* <Link to="/roads" className="btn btn-left">
                         Дороги
-                    </Link>
+                    </Link> */}
                     {/* <Link to="/payments" className="btn btn-right">
                         Сформированные оплаты
                     </Link> */}
-                    <div  className="btn btn-right">
+                    {/* <div  className="btn btn-right">
                         Сформированные оплаты
-                    </div>
+                    </div> */}
                 </div>
             </main>
         </div>

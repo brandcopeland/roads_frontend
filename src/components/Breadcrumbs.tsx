@@ -1,14 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Breadcrumbs = ({ path }) => {
-    const paths = path.split('/').filter(Boolean);
+// Define the type for the Breadcrumbs props
+interface BreadcrumbsProps {
+  path: string; // Specify that 'path' is a string
+}
 
-    // Соответствие между путями и их читаемыми именами
-    const pathNames = {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ path }) => {
+    const paths: string[] = path.split('/').filter(Boolean); // Specify that 'paths' is an array of strings
+
+    // Define the type for the pathNames object
+    const pathNames: { [key: string]: string } = {
         roads: 'Дороги',
-        payments: 'Оплаты'
-        // Добавьте другие соответствия по мере необходимости
+        payments: 'Оплаты',
+        // Add more mappings as needed
     };
 
     return (
@@ -16,12 +21,12 @@ const Breadcrumbs = ({ path }) => {
             <Link to="/" className="text-gray-400 hover:text-gray-600">
                 Главная
             </Link>
-            {paths.map((segment, index) => (
+            {paths.map((segment: string, index: number) => ( // Specify types for 'segment' and 'index'
                 <React.Fragment key={index}>
                     <span className="text-gray-400">/</span>
                     {index === paths.length - 1 ? (
                         <span className="text-gray-600">
-                            {pathNames[segment] || segment}
+                            {pathNames[segment] || segment} {/* TypeScript will now know the type of 'segment' */}
                         </span>
                     ) : (
                         <Link

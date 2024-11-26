@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { Link } from 'react-router-dom';
+
+import defaultImage from '../assets/default.png';
 
 interface Road {
     id: number;
@@ -27,7 +30,7 @@ const RoadPage: React.FC = () => {
             speed: 60,
             start: 10,
             end: 100,
-            image:  '../src/assets/default.png',
+            image:  defaultImage,
             value: true,
         };
 
@@ -75,7 +78,8 @@ const RoadPage: React.FC = () => {
                             <input type="text" value={road.start} disabled className="text-center w-16" /> по{' '}
                             <input type="text" value={road.end} disabled className="text-center w-16" />
                         </p>
-                        <a href="/roads" className="btn btn-primary my-4 w-25 return-btn">Домой</a>
+                        <Link to="/roads" className="btn btn-primary my-4 w-25 return-btn">Домой</Link>
+                        
                     </div>
                 </div>
             </main>

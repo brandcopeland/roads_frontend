@@ -6,13 +6,15 @@ import HomePage from './pages/HomePage'
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/roads" element={<RoadsPage />} />
-                <Route path="/payments" element={<PaymentPage />} />
-                <Route path="/roads/:roadId" element={<RoadPage />} />
-            </Routes>
+        <Router basename="/roads_frontend"> {/* RepoName - название вашего репозитория */}
+           
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/roads" element={<RoadsPage />} />
+                    <Route path="/payments" element={<PaymentPage />} />
+                    <Route path="/roads/:roadId" element={<RoadPage />} />
+                </Routes>
+           
         </Router>
     );
 }

@@ -5,6 +5,8 @@ import SearchBar from '../components/SearchBar';
 import RoadCard from '../components/RoadCard';
 import Breadcrumbs from '../components/Breadcrumbs';
 
+import defaultImage from '../assets/default.png';
+
 // Интерфейс для описания типа дороги
 interface Road {
     id: number;
@@ -16,7 +18,7 @@ interface Road {
 
 const RoadsPage: React.FC = () => {
     const [roads, setRoads] = useState<Road[]>([]);
-    const [filteredRoads, setFilteredRoads] = useState<Road[]>([]);
+    // const [filteredRoads, setFilteredRoads] = useState<Road[]>([]);
 
     const fetchRoads = async (query: string) => {
         try {
@@ -27,17 +29,18 @@ const RoadsPage: React.FC = () => {
             const data = await response.json();
             console.log(data)
             setRoads(data.roads);
-            setFilteredRoads(data.roads);
+            // setFilteredRoads(data.roads);
         } catch (error) {
             console.error('Ошибка при загрузке данных дорог:', error);
         }
     };
 
     useEffect(() => {
+        console.log('useEffect активирован')
         // Загрузка данных о дорогах (мок данные)
         setRoads([
-            { id: 1, name: 'Дорога 1', speed: 60, image: '../src/assets/default.png', value: true },
-            { id: 2, name: 'Дорога 2', speed: 80, image: '../src/assets/default.png', value: false },
+            { id: 1, name: 'Дорога 1', speed: 60, image: defaultImage, value: true },
+            { id: 2, name: 'Дорога 2', speed: 80, image: defaultImage, value: false },
         ]);
     }, []);
 
