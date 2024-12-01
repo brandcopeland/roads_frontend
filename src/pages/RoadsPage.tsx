@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import SearchBar from '../components/SearchBar';
 import RoadCard from '../components/RoadCard';
 import Breadcrumbs from '../components/Breadcrumbs';
-// import defaultImage from '../assets/default.png';
+import defaultImage from '../assets/default.png';
 
 import { useDispatch, useSelector } from "react-redux";
 import { setRoads } from "../redux/threatsSlice";
@@ -31,6 +31,15 @@ const RoadsPage: React.FC = () => {
         // Загружаем данные при изменении query
         fetchRoads(query);
     }, [query, dispatch]);
+
+    useEffect(() => {
+        console.log('useEffect активирован')
+        // Загрузка данных о дорогах (мок данные)
+        dispatch(setRoads([
+            { id: 1, name: 'Дорога 1', speed: 60, image: defaultImage, value: true },
+            { id: 2, name: 'Дорога 2', speed: 80, image: defaultImage, value: false },
+        ]));
+    }, []);
 
     return (
         <div className="wrapper">
