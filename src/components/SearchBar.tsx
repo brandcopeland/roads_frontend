@@ -1,12 +1,15 @@
-// src/components/SearchBar.tsx
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { setQuery } from "../redux/threatsSlice";
+import { RootState } from "../redux/store";
 
 const SearchBar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
-    const [query, setQuery] = useState('');
+    const dispatch = useDispatch();
+    const query = useSelector((state: RootState) => state.roads.query);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSearch(query);
+        onSearch(query); // Передаем query из глобального состояния
     };
 
     return (
@@ -14,7 +17,7 @@ const SearchBar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }
             <input
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => dispatch(setQuery(e.target.value))} // Сохраняем значение в Redux
                 placeholder="Введите название дороги"
                 className="form-control w-full"
             />
