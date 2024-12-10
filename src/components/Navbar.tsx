@@ -21,9 +21,7 @@ const Navbar = () => {
     const handleLogout = async () => {
         
         try {
-            const sessionId = Cookies.get('session_id'); // Получаем CSRF токен из cookies
-
-           
+            
             const response = await axios.post(
                 'http://localhost:8000/api/users/logout/',
                 {}, // Тело запроса (если пустое, передаём пустой объект)
