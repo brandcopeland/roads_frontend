@@ -1,10 +1,31 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import RoadsPage from './pages/RoadsPage';
 import PaymentPage from './pages/PaymentPage';
 import RoadPage from './pages/RoadPage';
 import HomePage from './pages/HomePage'
 
+const tauri = (window as any).__TAURI__?.tauri;
+
 function App() {
+
+    useEffect(() => {
+        if (tauri) {
+            tauri
+                .invoke("create")
+                .then((response: any) => console.log(response))
+                .catch((error: any) => console.log(error));
+    
+            return () => {
+                tauri
+                    .invoke("close")
+                    .then((response: any) => console.log(response))
+                    .catch((error: any) => console.log(error));
+            };
+        } else {
+            console.warn("Tauri API not available in this environment");
+        }
+    }, []);
     return (
         <Router basename="/roads_frontend"> {/* RepoName - название вашего репозитория */}
            
