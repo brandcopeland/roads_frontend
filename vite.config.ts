@@ -11,6 +11,7 @@ export default defineConfig({
   plugins: [react(), mkcert()],
   base: "/roads_frontend",
   server: {
+    https:false,
     host: "0.0.0.0",
     port: 3005,
     proxy: {
@@ -20,9 +21,11 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, "/"),
       },
     },
-    https:{
-      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    },
+    
   },
 });
+
+// https:{
+//   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
+//   cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
+// },

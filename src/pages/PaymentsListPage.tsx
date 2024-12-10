@@ -65,7 +65,8 @@ const PaymentsListPage: React.FC = () => {
                 throw new Error('Ошибка при загрузке данных оплат');
             }
             const data = await response.json();
-            setPayments(data.payments);
+            
+            setPayments(data);
         } catch (error) {
             console.error('Ошибка при загрузке данных оплат:', error);
         }
@@ -79,26 +80,39 @@ const PaymentsListPage: React.FC = () => {
         <div className="wrapper">
             <Navbar />
             <div className="container">
-                <h2>Список оплат</h2>
-                <div className="payments-vertical-list">
-                    {payments.map((payment) => (
-                        <div key={payment.id} className="payment-card">
-                            <h3>Оплата {payment.id}</h3>
-                            <div className="payment-details">
-                                {/* <div><strong>ID:</strong> {payment.id}</div>
-                                <div><strong>Владелец:</strong> {payment.owner}</div>
-                                <div><strong>Модератор:</strong> {payment.moderator ?? 'Не назначен'}</div> */}
-                                <div><strong>Статус:</strong> {payment.status ?? 'Не указано'}</div>
-                                <div><strong>Дата создания:</strong> {payment.date_created ?? 'Не указано'}</div>
-                                <div><strong>Дата формирования:</strong> {payment.date_formation ?? 'Не указано'}</div>
-                                <div><strong>Дата завершения:</strong> {payment.date_complete ?? 'Не завершено'}</div>
-                                <div><strong>Дата:</strong> {payment.date ?? 'Не указано'}</div>
-                                <div><strong>Номер:</strong> {payment.number ?? 'Не указано'}</div>
-                                <div><strong>Время:</strong> {payment.time ?? 'Не указано'}</div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <h2>Мои оплаты</h2>
+                <table className="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Номер заявки</th>
+                            {/* <th>Владелец</th>
+                            <th>Модератор</th> */}
+                            <th>Статус</th>
+                            {/* <th>Дата создания</th> */}
+                            {/* <th>Дата формирования</th>
+                            <th>Дата завершения</th> */}
+                            <th>Дата</th>
+                            <th>Номер</th>
+                            {/* <th>Время с транспондера</th> */}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {payments.map((payment) => (
+                            <tr key={payment.id}>
+                                <td>{payment.id}</td>
+                                {/* <td>{payment.owner}</td>
+                                <td>{payment.moderator ?? 'Не назначен'}</td> */}
+                                <td>{payment.status ?? 'Не указано'}</td>
+                                {/* <td>{payment.date_created ?? 'Не указано'}</td> */}
+                                {/* <td>{payment.date_formation ?? 'Не указано'}</td>
+                                <td>{payment.date_complete ?? 'Не завершено'}</td> */}
+                                <td>{payment.date ?? 'Не указано'}</td>
+                                <td>{payment.number ?? 'Не указано'}</td>
+                                {/* <td>{payment.time ?? 'Не указано'}</td> */}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

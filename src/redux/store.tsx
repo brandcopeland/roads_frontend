@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import roadsReducer from './threatsSlice';
+import authReducer from './authSlice';
 
 const store = configureStore({
     reducer: {
         roads: roadsReducer, // Добавляем редьюсер дорог
+        auth: authReducer,
     },
 });
 

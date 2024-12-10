@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../redux/authSlice'; // Import login action
+import Cookie from 'js-cookie';
 import Navbar from '../components/Navbar';
 import '../components/Auth.css';
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [authData, setAuthData] = useState(null);
+    const [error, setError] = useState(''); // Error state
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
+            Cookie.remove('csrftoken');
+            Cookie.remove('sessionid');
             const response = await axios.post(
                 'http://localhost:8000/api/users/login/',
                 {
@@ -20,11 +28,29 @@ const LoginPage: React.FC = () => {
                     withCredentials: true, // Включает отправку и получение cookie
                 }
             );
-            setAuthData(response.data);
+
             console.log('Login Response:', response.data);
 
-            // Доступ к cookie через document.cookie
-            console.log('Session ID:', document.cookie);
+            let is_staff = false;
+            if (response.data.staff === true) {
+                is_staff = true;
+            }
+            dispatch(login({ username, is_staff }));
+            navigate('/roads');
+            // // Доступ к cookies через document.cookie
+            // const cookies = document.cookie;
+            // const sessionId = cookies
+            //     .split('; ')
+            //     .find(cookie => cookie.startsWith('session_id='))
+            //     ?.split('=')[1];
+
+            // if (sessionId) {
+            //     // Сохраняем session_id в localStorage
+            //     localStorage.setItem('session_id', sessionId);
+            //     console.log('Session ID сохранён в localStorage:', sessionId);
+            // } else {
+            //     console.warn('Session ID не найден в cookies.');
+            // }
         } catch (error) {
             console.error('Login Error:', error);
         }

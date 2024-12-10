@@ -29,9 +29,9 @@ const ProfilePage = () => {
         <>
         <Navbar />
         <div className="profile-container">
-            <h2>Личный кабинет</h2>
+            <h2 className="profile-title">Личный кабинет</h2>
             <form onSubmit={handlePasswordChange} className="profile-form">
-                <div className="form-group">
+                <div className="profile-form-group">
                     <label htmlFor="email">Электронная почта</label>
                     <input
                         type="email"
@@ -41,7 +41,7 @@ const ProfilePage = () => {
                         placeholder="Введите ваш email"
                     />
                 </div>
-                <div className="form-group">
+                <div className="profile-form-group">
                     <label htmlFor="current-password">Текущий пароль</label>
                     <input
                         type="password"
@@ -51,7 +51,7 @@ const ProfilePage = () => {
                         placeholder="Введите текущий пароль"
                     />
                 </div>
-                <div className="form-group">
+                <div className="profile-form-group">
                     <label htmlFor="new-password">Новый пароль</label>
                     <input
                         type="password"
@@ -61,7 +61,7 @@ const ProfilePage = () => {
                         placeholder="Введите новый пароль"
                     />
                 </div>
-                <div className="form-group">
+                <div className="profile-form-group">
                     <label htmlFor="confirm-password">Подтвердите новый пароль</label>
                     <input
                         type="password"
@@ -71,7 +71,7 @@ const ProfilePage = () => {
                         placeholder="Подтвердите новый пароль"
                     />
                 </div>
-                <button type="submit" className="profile-button">Изменить пароль</button>
+                <button type="submit" className="profile-button">Изменить данные</button>
             </form>
         </div>
         </>
