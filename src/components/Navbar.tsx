@@ -17,12 +17,18 @@ const Navbar = () => {
                 <Link to="/roads" className="nav-link">
                     Дороги
                 </Link>
-                {/* <Link to="/payments" className="nav-link">
-                    Сформированные оплаты
-                </Link> */}
-                 {/* <Link to="/payments" className="nav-link">
-                    Сформированные оплаты
-                </Link> */}
+                <Link to="/payments-list" className="nav-link">
+                    Список заявок
+                </Link>
+                <Link to="/login" className="nav-link">
+                    Войти
+                </Link>
+                <Link to="/register" className="nav-link">
+                    Регистрация
+                </Link>
+                <Link to="/profile" className="nav-link">
+                    Личный кабинет
+                </Link>
             </nav>
             <div className="burger-menu" onClick={toggleMenu}>
                 <div className="burger-bar"></div>
