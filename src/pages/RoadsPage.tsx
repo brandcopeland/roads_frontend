@@ -6,7 +6,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import defaultImage from '../assets/default.png';
 
 import { useDispatch, useSelector } from "react-redux";
-import { setRoads } from "../redux/threatsSlice";
+import { setRoads, setDraftPaymentId, setRoadsAdded } from "../redux/threatsSlice";
 import { RootState } from "../redux/store";
 
 const RoadsPage: React.FC = () => {
@@ -22,6 +22,8 @@ const RoadsPage: React.FC = () => {
             }
             const data = await response.json();
             dispatch(setRoads(data.roads));
+            dispatch(setDraftPaymentId(data.draft_payment_id));
+            dispatch(setRoadsAdded(data.roads_count));
         } catch (error) {
             console.error('Ошибка при загрузке данных дорог:', error);
         }

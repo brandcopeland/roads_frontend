@@ -9,11 +9,15 @@ import {setQuery, setRoads} from '../redux/threatsSlice'
 import { logout } from "../redux/authSlice.tsx";
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import { RootState } from "../redux/store";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { isAuthenticated, username } = useSelector((state) => state.auth); // Получаем данные о пользователе из Redux состояния
-    
+    const roadsAdded = useSelector((state: RootState) => state.roads.roads_added);
+
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const toggleMenu = () => setIsMenuOpen(prevState => !prevState);
@@ -55,8 +59,13 @@ const Navbar = () => {
                 
                 {isAuthenticated ? (
                     <>
+                    
                     <Link to="/payments-list" className="nav-link">
                     Список оплат
+                    </Link>
+
+                    <Link to="/payment" className="nav-link">
+                    Корзина ({roadsAdded})
                     </Link>
                     
                     <Link to="/profile" className="nav-link">

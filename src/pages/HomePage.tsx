@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
                     {/* <Link to="/roads" className="btn btn-left">
                         Дороги
                     </Link> */}
-                    {/* <Link to="/payments" className="btn btn-right">
+                    {/* <Link to="/payments-list" className="btn btn-right">
                         Сформированные оплаты
                     </Link> */}
                     {/* <div  className="btn btn-right">

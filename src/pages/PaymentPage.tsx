@@ -1,5 +1,6 @@
 // src/pages/PaymentPage.tsx
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Navbar from '../components/Navbar';
 import RoadCard from '../components/RoadCard';
 
@@ -28,6 +29,26 @@ const PaymentPage: React.FC = () => {
             ],
         });
     }, []);
+
+    useEffect(() => {
+
+        fetchPayment();
+    }, []);
+
+    const fetchPayment = async () => {
+        try {
+            const response = await axios.get<Payment>(
+                'http://localhost:8000/api/payments/31/',
+                { withCredentials: true } // Для отправки cookies
+            );
+            setPayment(response.data);
+        } catch (err) {
+            console.error('Ошибка при загрузке данных о платеже:', err);
+            setError('Не удалось загрузить данные о платеже.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (!payment) {
         return <div className="text-center my-5">Загрузка данных...</div>;
