@@ -1,20 +1,19 @@
 // src/components/Navbar.tsx
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import axios from 'axios';
 import {setQuery, setRoads} from '../redux/threatsSlice'
 
 import { logout } from "../redux/authSlice.tsx";
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import { RootState } from "../redux/store";
+// import { RootState } from "../redux/store";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { isAuthenticated, username } = useSelector((state) => state.auth); // Получаем данные о пользователе из Redux состояния
-    const roadsAdded = useSelector((state: RootState) => state.roads.roads_added);
 
 
 
@@ -64,9 +63,9 @@ const Navbar = () => {
                     Список оплат
                     </Link>
 
-                    <Link to="/payment" className="nav-link">
+                    {/* <Link to="/payment" className="nav-link">
                     Корзина ({roadsAdded})
-                    </Link>
+                    </Link> */}
                     
                     <Link to="/profile" className="nav-link">
                         Личный кабинет ({username})

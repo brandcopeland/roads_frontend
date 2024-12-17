@@ -21,7 +21,7 @@ const SearchBar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }
                 placeholder="Введите название дороги"
                 className="form-control w-full"
             />
-            <button type="submit" className="btn btn-primary">Поиск</button>
+            {/* <button type="submit" className="btn btn-primary">Поиск</button> */}
         </form>
     );
 };

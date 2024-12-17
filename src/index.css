@@ -293,6 +293,57 @@ main {
     margin-left:30px
 }
 
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* src/styles/RoadsPage.css */
+.search-cart-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.search-bar-container {
+    flex-grow: 1;
+    margin-right: 1rem;
+    height: 30px;
+    
+}
+
+.cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--bin-bg); /* Оранжевый цвет по умолчанию */
+    color: var(--bin-color);
+    transition: all 0.3s;
+}
+
+.cart-button.disabled {
+    background-color: #ccc; /* Серый для неактивного состояния */
+    color: #777;
+    cursor: not-allowed;
+}
+
+.cart-button span {
+    margin-left: 0.5rem;
+    font-weight: bold;
+}
+
+
 @media (max-width: 480px) {
     .cards-wrapper {
         grid-template-columns: 1fr; /* Одна колонка */
@@ -302,5 +353,126 @@ main {
     .cards-wrapper .card {
         width: 80%; /* Полная ширина */
        
+    }
+}
+
+
+/* Общие стили для страницы оплаты */
+.payment-wrapper {
+    color: var(--text_color);
+    background: var(--root_bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок таблицы */
+.payment-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+/* Таблица */
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.payment-table th, .payment-table td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid var(--card-border-color);
+}
+
+.payment-table th {
+    background-color: var(--primary-color);
+    color: var(--primary-btn-color);
+    font-weight: bold;
+}
+
+.payment-table td {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+}
+
+/* Стили для строки */
+.payment-row:hover {
+    background-color: rgba(234, 91, 12, 0.1);
+}
+
+/* Кнопка удаления */
+.payment-delete-btn {
+    background-color: var(--bin-bg);
+    border: 1px solid var(--bin-border);
+    color: var(--bin-color);
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.payment-delete-btn:hover {
+    background-color: var(--bin-bg--hover);
+    border-color: var(--bin-border--hover);
+    color: var(--bin-color--hover);
+}
+
+/* Изображение дороги */
+.payment-road-img {
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--card-border-color);
+}
+
+/* Стили для адаптивности */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 10px;
+    }
+
+    .payment-header {
+        font-size: 1.2rem;
+    }
+
+    .payment-table th, .payment-table td {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .payment-road-img {
+        width: 80px;
+        height: 60px;
+    }
+
+    .payment-delete-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-container {
+        width: 90%;
+    }
+
+    .payment-table {
+        font-size: 0.8rem;
     }
 }

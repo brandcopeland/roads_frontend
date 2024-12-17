@@ -8,26 +8,31 @@ interface RoadCardProps {
         name: string;
         speed: number;
         image: string;
-        value?: boolean;
     };
+    canBeDeleted?: boolean;
+    onDelete?: (roadId: number) => void;
+    onAdd?: () => void; // Без аргументов
 }
 
-const RoadCard: React.FC<RoadCardProps> = ({ road }) => {
+const RoadCard: React.FC<RoadCardProps> = ({ road, canBeDeleted, onDelete, onAdd }) => {
     const handleAddToPayment = async () => {
         try {
-            const response = await axios.post(
+            await axios.post(
                 `http://localhost:8000/api/roads/${road.id}/add_to_payment/`,
-                {}, // Тело запроса пустое
-                {
-                    withCredentials: true, // Включает отправку cookies
-                }
+                {},
+                { withCredentials: true }
             );
-            console.log('Добавлено в оплату:', response.data);
             console.log('Дорога успешно добавлена в оплату!');
+            if (onAdd) {
+                onAdd(); // Вызов функции onAdd
+            }
         } catch (error) {
             console.error('Ошибка при добавлении дороги:', error);
-            console.log('Не удалось добавить дорогу в оплату.');
         }
+    };
+
+    const handleDelete = () => {
+        if (onDelete) onDelete(road.id);
     };
 
     return (
@@ -36,19 +41,26 @@ const RoadCard: React.FC<RoadCardProps> = ({ road }) => {
             <div className="card-body">
                 <h5 className="card-title">{road.name}</h5>
                 <p className="card-text">Разрешенная скорость: {road.speed} км/ч</p>
-                {/* Если значение "value" присутствует */}
-                {/* {road.value !== undefined && (
-                    <div className="form-group">
-                        <label>Ночь</label>
-                        <input className="form-control" value={road.value ? "Да" : "Нет"} disabled />
-                    </div>
-                )} */}
                 <Link to={`/roads/${road.id}`} className="btn btn-primary">
                     Открыть
                 </Link>
-                <button onClick={handleAddToPayment} className="btn btn-secondary" style={{ marginLeft: '10px' }}>
-                    Добавить
-                </button>
+                {canBeDeleted ? (
+                    <button
+                        onClick={handleDelete}
+                        className="btn btn-danger"
+                        style={{ marginLeft: '10px' }}
+                    >
+                        Удалить
+                    </button>
+                ) : (
+                    <button
+                        onClick={handleAddToPayment}
+                        className="btn btn-secondary"
+                        style={{ marginLeft: '10px' }}
+                    >
+                        Добавить
+                    </button>
+                )}
             </div>
         </div>
     );

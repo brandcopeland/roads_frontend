@@ -1,7 +1,14 @@
-// src/pages/PaymentsListPage.tsx
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import '../components/PaymentsListPage.css'; // Импорт стилей
+import '../components/PaymentsListPage.css'; // Import styles
+
+const STATUS_CHOICES = [
+    [1, 'Введён'],
+    [2, 'В работе'],
+    [3, 'Завершен'],
+    [4, 'Отклонен'],
+    [5, 'Удален']
+];
 
 const PaymentsListPage: React.FC = () => {
     const [payments, setPayments] = useState<any[]>([
@@ -59,16 +66,15 @@ const PaymentsListPage: React.FC = () => {
         try {
             const response = await fetch('http://localhost:8000/api/payments/', {
                 method: 'GET',
-                credentials: 'include', // Чтобы передать cookie с session_id
+                credentials: 'include', // To send session_id cookie
             });
             if (!response.ok) {
-                throw new Error('Ошибка при загрузке данных оплат');
+                throw new Error('Error fetching payments data');
             }
             const data = await response.json();
-            
             setPayments(data);
         } catch (error) {
-            console.error('Ошибка при загрузке данных оплат:', error);
+            console.error('Error fetching payments:', error);
         }
     };
 
@@ -76,39 +82,60 @@ const PaymentsListPage: React.FC = () => {
         fetchPayments();
     }, []);
 
+    // Function to convert status ID to the corresponding label
+    const getStatusLabel = (statusId: number) => {
+        const status = STATUS_CHOICES.find(([id]) => id === statusId);
+        return status ? status[1] : 'Не указано';
+    };
+
+    // Function to format the date into a readable format
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleString('ru-RU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    };
+
+    // Function to format time
+    const formatTime = (timeString: string | null) => {
+        if (!timeString) return 'Не указано';
+        const [hours, minutes, seconds] = timeString.split(':');
+        return `${hours}:${minutes}:${seconds.split('.')[0]}`;
+    };
+
     return (
         <div className="wrapper">
             <Navbar />
             <div className="container">
-                <h2>Мои оплаты</h2>
+                <div className="card-header">
+                    <h2>Мои оплаты</h2>
+                </div>
                 <table className="payments-table">
                     <thead>
                         <tr>
-                            <th>Номер заявки</th>
-                            {/* <th>Владелец</th>
-                            <th>Модератор</th> */}
-                            <th>Статус</th>
-                            {/* <th>Дата создания</th> */}
-                            {/* <th>Дата формирования</th>
-                            <th>Дата завершения</th> */}
-                            <th>Дата</th>
-                            <th>Номер</th>
-                            {/* <th>Время с транспондера</th> */}
+                            <th>Номер оплаты</th>
+                            <th>Статус оплаты</th>
+                            <th>Дата формирования оплаты</th>
+                            <th>Время с транспондера</th>
+                            <th>Создатель</th>
+                            <th>Дата поездки</th>
+                            <th>Номер автомобиля</th>
                         </tr>
                     </thead>
                     <tbody>
                         {payments.map((payment) => (
                             <tr key={payment.id}>
                                 <td>{payment.id}</td>
-                                {/* <td>{payment.owner}</td>
-                                <td>{payment.moderator ?? 'Не назначен'}</td> */}
-                                <td>{payment.status ?? 'Не указано'}</td>
-                                {/* <td>{payment.date_created ?? 'Не указано'}</td> */}
-                                {/* <td>{payment.date_formation ?? 'Не указано'}</td>
-                                <td>{payment.date_complete ?? 'Не завершено'}</td> */}
+                                <td>{getStatusLabel(payment.status)}</td>
+                                <td>{payment.date_formation ? formatDate(payment.date_formation) : 'Не указано'}</td>
+                                <td>{formatTime(payment.time)}</td>
+                                <td>{payment.owner}</td>
                                 <td>{payment.date ?? 'Не указано'}</td>
                                 <td>{payment.number ?? 'Не указано'}</td>
-                                {/* <td>{payment.time ?? 'Не указано'}</td> */}
                             </tr>
                         ))}
                     </tbody>
