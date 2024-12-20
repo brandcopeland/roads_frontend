@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { setQuery } from "../redux/threatsSlice";
+import { setQuery } from "../redux/roadsSlice";
 import { RootState } from "../redux/store";
 
 const SearchBar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {

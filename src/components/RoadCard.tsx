@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import {  AppDispatch } from '../redux/store';
+import { addRoadToPayment } from '../redux/roadsSlice';
 
 interface RoadCardProps {
     road: {
@@ -15,13 +17,12 @@ interface RoadCardProps {
 }
 
 const RoadCard: React.FC<RoadCardProps> = ({ road, canBeDeleted, onDelete, onAdd }) => {
+    
+    const dispatch = useDispatch<AppDispatch>();
+
     const handleAddToPayment = async () => {
         try {
-            await axios.post(
-                `http://localhost:8000/api/roads/${road.id}/add_to_payment/`,
-                {},
-                { withCredentials: true }
-            );
+            await dispatch(addRoadToPayment(road.id)).unwrap();
             console.log('Дорога успешно добавлена в оплату!');
             if (onAdd) {
                 onAdd(); // Вызов функции onAdd

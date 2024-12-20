@@ -1,44 +1,120 @@
-.payments-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.payments-table th,
-.payments-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
-
-.payments-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-.payments-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.payments-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-.payments-table td {
-    font-size: 14px;
-}
-
-/* Card header style */
+/* Заголовок */
 .card-header {
     background-color: #fff;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .card-header h2 {
     margin: 0;
     font-size: 24px;
     color: #333;
+}
+
+/* Фильтры */
+.filter-container label {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.filter-container input {
+    margin-right: 12px;
+    padding: 4px 8px;
+}
+
+/* Карточки */
+.payments-cards-wrapper {
+    overflow-x: auto;
+}
+
+.payments-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payments-cards-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: var(--bin-bg);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.payments-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    flex-wrap: wrap;
+}
+
+.payments-card:hover {
+    background-color: #f9f9f9;
+}
+
+.payments-card span {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 10px;
+}
+
+.actions h3 {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.actions button {
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+    background-color: #0056b3;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .payments-cards-header,
+    .payments-card {
+        flex-wrap: wrap;
+    }
+
+    .payments-card span {
+        flex: none;
+        width: 100%;
+        text-align: left;
+    }
+
+    .actions {
+        flex: 0 0 100%;
+        align-items: center;
+    }
 }

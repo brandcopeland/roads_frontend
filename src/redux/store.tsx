@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import roadsReducer from './threatsSlice';
+import roadsReducer from './roadsSlice';
 import authReducer from './authSlice';
 
 const store = configureStore({
     reducer: {
-        roads: roadsReducer, // Добавляем редьюсер дорог
+        roads: roadsReducer,
         auth: authReducer,
     },
 });
 
-// Типы для использования с TypeScript
+//Типы для работы с TS
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

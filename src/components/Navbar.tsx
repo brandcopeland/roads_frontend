@@ -1,48 +1,29 @@
-// src/components/Navbar.tsx
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../redux/store";
 
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import Cookies from 'js-cookie';
-import axios from 'axios';
-import {setQuery, setRoads} from '../redux/threatsSlice'
-
-import { logout } from "../redux/authSlice.tsx";
-import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';
-// import { RootState } from "../redux/store";
+import { logoutUser } from "../redux/authSlice.tsx";
+import { fetchRoads, setQuery } from "../redux/roadsSlice.tsx";
+import { Link, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { isAuthenticated, username } = useSelector((state) => state.auth); // Получаем данные о пользователе из Redux состояния
-
-
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const toggleMenu = () => setIsMenuOpen(prevState => !prevState);
-
-    const handleLogout = async () => {
-        
-        try {
-            
-            const response = await axios.post(
-                'http://localhost:8000/api/users/logout/',
-                {}, // Тело запроса (если пустое, передаём пустой объект)
-                {
-                    withCredentials:true
-                }
-            );
+    const { isAuthenticated, username } = useSelector((state: RootState) => state.auth);
     
-            console.log(response.status, response.data)
-            if (response.status === 200) {
-                dispatch(setRoads([]));
-                dispatch(setQuery(''))
-                dispatch(logout()); // Вызываем экшен для логута в Redux
-                navigate('/login'); // Перенаправляем на страницу логина
-            }
-        } catch (error) {
-            console.error('Ошибка при выходе:', error);
-            alert('Ошибка при выходе. Пожалуйста, попробуйте позже.');
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
+    // Переключение состояния меню
+    const toggleMenu = () => setIsMenuOpen((prevState) => !prevState);
+
+    // Логаут пользователя
+    const handleLogout = async () => {
+        const result = await dispatch(logoutUser());
+        if (logoutUser.fulfilled.match(result)) {
+            dispatch(fetchRoads("")); // Очищаем дороги
+            dispatch(setQuery("")); // Сбрасываем поисковый запрос
+            navigate("/login"); // Перенаправляем на страницу логина
         }
     };
 
@@ -51,33 +32,25 @@ const Navbar = () => {
             <Link to="/" className="navbar-brand text-xl font-semibold">
                 Платные дороги
             </Link>
-            <nav className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
+
+            <nav className={`nav-links ${isMenuOpen ? "active" : ""}`}>
                 <Link to="/roads" className="nav-link">
                     Дороги
                 </Link>
-                
+
                 {isAuthenticated ? (
                     <>
-                    
-                    <Link to="/payments-list" className="nav-link">
-                    Список оплат
-                    </Link>
-
-                    {/* <Link to="/payment" className="nav-link">
-                    Корзина ({roadsAdded})
-                    </Link> */}
-                    
-                    <Link to="/profile" className="nav-link">
-                        Личный кабинет ({username})
-                    </Link>
-
-                    <Link to="/roads" onClick={handleLogout} className="nav-link">
+                        <Link to="/payments-list" className="nav-link">
+                            Список оплат
+                        </Link>
+                        <Link to="/profile" className="nav-link">
+                            Личный кабинет ({username})
+                        </Link>
+                        <Link to="/roads" onClick={handleLogout} className="nav-link">
                             Выйти
                         </Link>
                     </>
-                    
                 ) : (
-                    // Отображаем кнопки "Войти" и "Регистрация" для неавторизованных
                     <>
                         <Link to="/login" className="nav-link">
                             Войти
@@ -88,6 +61,7 @@ const Navbar = () => {
                     </>
                 )}
             </nav>
+
             <div className="burger-menu" onClick={toggleMenu}>
                 <div className="burger-bar"></div>
                 <div className="burger-bar"></div>

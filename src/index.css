@@ -356,27 +356,7 @@ main {
     }
 }
 
-
-/* Общие стили для страницы оплаты */
-.payment-wrapper {
-    color: var(--text_color);
-    background: var(--root_bg);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.payment-container {
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 1200px;
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Заголовок таблицы */
+/* PaymentPage */
 .payment-header {
     font-size: 1.5rem;
     font-weight: bold;
@@ -385,36 +365,87 @@ main {
     color: var(--primary-color);
 }
 
-/* Таблица */
-.payment-table {
-    width: 100%;
-    border-collapse: collapse;
+.payment-cards {
+    display: flex;
+    flex-direction: column; /* Карточки будут располагаться друг над другом */
+    gap: 20px;
+    justify-content: center;
     margin-top: 20px;
 }
 
-.payment-table th, .payment-table td {
-    padding: 10px 15px;
+.payment-card {
+    width: 80%; /* Карточка занимает 80% ширины экрана */
+    margin: 0 auto; /* Выравнивание карточек по центру */
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+}
+
+.payment-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.payment-card-header {
+    background-color: var(--primary-color);
+    padding: 10px;
+    color: var(--primary-btn-color);
     text-align: center;
+    font-size: 1.2rem;
+}
+
+.payment-card-body {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.payment-card-info {
+    display: flex;
+    align-items: center; /* Все элементы в строку */
+    justify-content: space-between; /* Разделение элементов по сторонам */
+    gap: 15px;
+}
+
+.payment-card-info p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.payment-road-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
     border: 1px solid var(--card-border-color);
 }
 
-.payment-table th {
-    background-color: var(--primary-color);
-    color: var(--primary-btn-color);
-    font-weight: bold;
+.payment-toggle-btn {
+    background-color: var(--bin-bg);
+    border: 1px solid var(--bin-border);
+    color:white;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
-.payment-table td {
-    background-color: var(--card-bg);
-    color: var(--card-text);
+.payment-toggle-btn:hover {
+    background-color: var(--bin-bg--hover);
+    border-color: var(--bin-border--hover);
+    color: var(--bin-color--hover);
 }
 
-/* Стили для строки */
-.payment-row:hover {
-    background-color: rgba(234, 91, 12, 0.1);
+.payment-card-footer {
+    margin-top: 15px;
+    text-align: center;
 }
 
-/* Кнопка удаления */
 .payment-delete-btn {
     background-color: var(--bin-bg);
     border: 1px solid var(--bin-border);
@@ -432,15 +463,6 @@ main {
     color: var(--bin-color--hover);
 }
 
-/* Изображение дороги */
-.payment-road-img {
-    width: 100px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid var(--card-border-color);
-}
-
 /* Стили для адаптивности */
 @media (max-width: 768px) {
     .payment-container {
@@ -451,28 +473,17 @@ main {
         font-size: 1.2rem;
     }
 
-    .payment-table th, .payment-table td {
-        font-size: 0.9rem;
-        padding: 8px;
+    .payment-card {
+        padding: 15px;
     }
 
     .payment-road-img {
-        width: 80px;
         height: 60px;
+        width: 60px;
     }
 
-    .payment-delete-btn {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .payment-container {
-        width: 90%;
-    }
-
-    .payment-table {
-        font-size: 0.8rem;
+    .payment-card-info {
+        flex-wrap: wrap; /* Если экран маленький, элементы перенесутся на следующую строку */
+        justify-content: flex-start;
     }
 }

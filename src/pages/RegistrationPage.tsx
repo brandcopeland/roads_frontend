@@ -1,5 +1,8 @@
+// src/pages/RegistrationPage.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import {  useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store'; // Импортируем тип Dispatch
+import { registerUser } from '../redux/authSlice';
 import Navbar from '../components/Navbar';
 import '../components/Auth.css';
 
@@ -11,7 +14,8 @@ const RegistrationPage: React.FC = () => {
         email: '',
         password: '',
     });
-    const [authData, setAuthData] = useState(null);
+    const dispatch = useDispatch<AppDispatch>(); // Указываем тип Dispatch
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -20,9 +24,10 @@ const RegistrationPage: React.FC = () => {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/users/register/', form);
-            setAuthData(response.data);
-            console.log('Register Response:', response.data);
+            const actionResult = await dispatch(registerUser(form));
+            if (registerUser.fulfilled.match(actionResult)) {
+                console.log('Register Response:', actionResult.payload);
+            }
         } catch (error) {
             console.error('Register Error:', error);
         }
