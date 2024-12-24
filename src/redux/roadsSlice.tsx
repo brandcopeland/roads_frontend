@@ -175,6 +175,55 @@ export const deleteRoadFromPayment = createAsyncThunk(
     }
 );
 
+
+// Добавляем thunks в roadsSlice.ts
+export const updatePayment = createAsyncThunk(
+    'roads/updatePayment',
+    async (PaymentId: number, { rejectWithValue }) => {
+        try {
+            const response = await axios.put(
+                `http://localhost:8000/api/payments/${PaymentId}/update_status_user/`,
+                {},
+                { withCredentials: true }
+            );
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.message || 'Ошибка обновления оплаты');
+        }
+    }
+);
+
+export const deletePayment = createAsyncThunk(
+    'roads/deletePayment',
+    async (PaymentId: number, { rejectWithValue }) => {
+        try {
+            const response = await axios.delete(
+                `http://localhost:8000/api/payments/${PaymentId}/delete/`,
+                { withCredentials: true }
+            );
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.message || 'Ошибка удаления оплаты');
+        }
+    }
+);
+
+export const savePayment = createAsyncThunk(
+    'roads/savePayment',
+    async (PaymentId: number, { rejectWithValue }) => {
+        try {
+            const response = await axios.put(
+                `http://localhost:8000/api/payments/${PaymentId}/update_status_user/`,
+                {},
+                { withCredentials: true }
+            );
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.message || 'Ошибка сохранения оплаты');
+        }
+    }
+);
+
 const roadsSlice = createSlice({
     name: 'roads',
     initialState,
@@ -278,6 +327,45 @@ const roadsSlice = createSlice({
                 state.loading = false;
             })
             .addCase(deleteRoadFromPayment.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+
+             // Update  Payment
+            .addCase(updatePayment.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updatePayment.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(updatePayment.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+
+            // Delete  Payment
+            .addCase(deletePayment.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deletePayment.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(deletePayment.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+
+            // Save  Payment
+            .addCase(savePayment.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(savePayment.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(savePayment.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });

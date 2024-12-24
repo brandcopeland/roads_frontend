@@ -463,6 +463,23 @@ main {
     color: var(--bin-color--hover);
 }
 
+.payment-details {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-buttons {
+    display: flex;
+    justify-content: start;
+    gap: 15px;
+    margin-top: 20px;
+}
+
 /* Стили для адаптивности */
 @media (max-width: 768px) {
     .payment-container {
