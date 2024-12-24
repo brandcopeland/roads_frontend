@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import PaymentsListPage from './pages/PaymentsListPage'; 
 import ProfilePage from './pages/ProfilePage'; 
+import PaymentPageOne from './pages/PaymentPageOne';
 
 
 const tauri = (window as any).__TAURI__?.tauri;
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/register" element={<RegistrationPage />} />
                 <Route path="/payments-list" element={<PaymentsListPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/payment/:paymentId" element={<PaymentPageOne />} />
             </Routes>
         </Router>
     );

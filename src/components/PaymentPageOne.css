@@ -1,0 +1,111 @@
+.paymentone-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.paymentone-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+}
+
+.paymentone-header {
+    text-align: center;
+}
+
+.paymentone-details {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.paymentone-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.paymentone-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.paymentone-card {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+}
+
+.paymentone-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.paymentone-card-header {
+    background-color: var(--primary-color);
+    padding: 10px;
+    color: var(--primary-btn-color);
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.paymentone-card-body {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.paymentone-card-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.paymentone-road-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--card-border-color);
+}
+
+.paymentone-delete-btn,
+.paymentone-toggle-btn {
+    background-color: var(--bin-bg);
+    border: 1px solid var(--bin-border);
+    color: var(--bin-color);
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.paymentone-delete-btn:hover,
+.paymentone-toggle-btn:hover {
+    background-color: var(--bin-bg--hover);
+    border-color: var(--bin-border--hover);
+    color: var(--bin-color--hover);
+}

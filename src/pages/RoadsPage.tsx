@@ -15,6 +15,8 @@ const RoadsPage: React.FC = () => {
     const navigate = useNavigate();
 
     const { roads, query, roads_added, loading, error } = useSelector((state: RootState) => state.roads);
+    const { draft_payment_id } = useSelector((state: RootState) => state.roads);
+    
 
     const handleSearch = (searchQuery: string) => {
         dispatch(setQuery(searchQuery));
@@ -39,7 +41,7 @@ const RoadsPage: React.FC = () => {
                     {/* Кнопка-корзина */}
                     <div
                         className={`cart-button ${roads_added > 0 ? "" : "disabled"}`}
-                        onClick={() => roads_added > 0 && navigate("/payment")}
+                        onClick={() => roads_added > 0 && navigate(`/payment/${draft_payment_id}`)}
                     >
                         <span>Корзина</span>
                         <span className="cart-count">{roads_added}</span>

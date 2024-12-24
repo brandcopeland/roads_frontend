@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
 import { RootState, AppDispatch } from '../redux/store';
 import {
     updatePayment,
@@ -10,42 +11,42 @@ import {
     deleteRoadFromPayment,
 } from '../redux/roadsSlice';
 import Navbar from '../components/Navbar';
-import '../index.css';
-import { useNavigate } from 'react-router-dom';
+import '../components/PaymentPageOne.css';
 
-const PaymentPage: React.FC = () => {
+const PaymentPageOne: React.FC = () => {
+    const { paymentId } = useParams<{ paymentId: string }>(); // Получаем paymentId из маршрута
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate(); 
-    const { payment, draft_payment_id, loading, error } = useSelector((state: RootState) => state.roads);
-
+    const navigate = useNavigate();
+    const { payment, loading, error } = useSelector((state: RootState) => state.roads);
+    
     const [date, setDate] = useState<string>(''); // Локальное состояние для даты
     const [number, setNumber] = useState<string>(''); // Локальное состояние для номера
 
     useEffect(() => {
-        if (draft_payment_id) {
-            dispatch(fetchPayment(draft_payment_id)).unwrap().then((data: any) => {
+        if (paymentId) {
+            dispatch(fetchPayment(paymentId)).unwrap().then((data: any) => {
                 setDate(data.date || '');
                 setNumber(data.number || '');
             });
         }
-    }, [dispatch, draft_payment_id]);
+    }, [dispatch, paymentId]);
 
     const handleDayNightToggle = (roadId: number, currentStatus: boolean) => {
-        if (draft_payment_id) {
-            dispatch(updateDayNightStatus({ draftPaymentId: draft_payment_id, roadId, currentStatus }))
+        if (paymentId) {
+            dispatch(updateDayNightStatus({ draftPaymentId: paymentId, roadId, currentStatus }))
             .unwrap()
                 .then(() => {
-                    dispatch(fetchPayment(draft_payment_id));
+                    dispatch(fetchPayment(paymentId));
                 })
         }
     };
 
     const handleDeleteRoad = (roadId: number) => {
-        if (draft_payment_id) {
-            dispatch(deleteRoadFromPayment({ draftPaymentId: draft_payment_id, roadId }))
+        if (paymentId) {
+            dispatch(deleteRoadFromPayment({ draftPaymentId: paymentId, roadId }))
                 .unwrap()
                 .then(() => {
-                    dispatch(fetchPayment(draft_payment_id));
+                    dispatch(fetchPayment(paymentId));
                 })
                 .catch((error) => {
                     console.error('Ошибка при удалении дороги:', error);
@@ -55,9 +56,9 @@ const PaymentPage: React.FC = () => {
 
     const handleUpdatePayment = (PaymentId: number) => {
         dispatch(updatePayment(PaymentId))
-            .unwrap() // Дожидаемся выполнения действия
+            .unwrap()
             .then(() => {
-                navigate('/payments-list'); // Перенаправление на PaymentsListPage
+                navigate('/payments-list');
             })
             .catch((error) => {
                 console.error('Ошибка при обновлении оплаты:', error);
@@ -65,34 +66,38 @@ const PaymentPage: React.FC = () => {
     };
 
     const handleDeletePayment = (PaymentId: number) => {
-        dispatch(deletePayment(PaymentId));
+        dispatch(deletePayment(PaymentId))
+        .unwrap()
+            .then(() => {
+                navigate('/payments-list');
+            })
     };
 
-     const handleSavePayment = () => {
-            if (draft_payment_id) {
-                dispatch(savePayment({ id: parseInt(draft_payment_id, 10), date, number }))
-                    .unwrap()
-                    .then(() => {
-                        console.log('Сохранение выполнено');
-                    })
-                    .catch((error) => {
-                        console.error('Ошибка при сохранении:', error);
-                    });
-            }
-        };
+    const handleSavePayment = () => {
+        if (paymentId) {
+            dispatch(savePayment({ id: parseInt(paymentId, 10), date, number }))
+                .unwrap()
+                .then(() => {
+                    console.log('Сохранение выполнено');
+                })
+                .catch((error) => {
+                    console.error('Ошибка при сохранении:', error);
+                });
+        }
+    };
 
     if (loading) return <div>Загрузка данных...</div>;
     if (error) return <div>Ошибка: {error}</div>;
 
     return payment ? (
-        <div className="payment-wrapper">
+        <div className="paymentone-wrapper">
             <Navbar />
-            <main className="payment-container">
-                <div className="payment-header">
-                    <h3 className="payment-title">Оплата проезда</h3>
+            <main className="paymentone-container">
+                <div className="paymentone-header">
+                    <h3 className="paymentone-title">Оплата проезда</h3>
                 </div>
 
-                <div className="payment-details">
+                <div className="paymentone-details">
                 <label>
                         <strong>Дата проезда:</strong>
                         <input
@@ -111,21 +116,21 @@ const PaymentPage: React.FC = () => {
                             className="paymentone-input"
                         />
                     </label>
-                    <div className="payment-buttons">
+                    <div className="paymentone-buttons">
                         <button
-                            className="payment-delete-btn"
+                            className="paymentone-delete-btn"
                             onClick={() => handleUpdatePayment(payment.id)}
                         >
                             Сформировать
                         </button>
                         <button
-                            className="payment-delete-btn"
+                            className="paymentone-delete-btn"
                             onClick={() => handleDeletePayment(payment.id)}
                         >
                             Удалить заявку
                         </button>
                         <button
-                            className="payment-delete-btn"
+                            className="paymentone-delete-btn"
                             onClick={() => handleSavePayment()}
                         >
                             Сохранить заявку
@@ -133,27 +138,27 @@ const PaymentPage: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="payment-cards">
+                <div className="paymentone-cards">
                     {payment.roads.map((road) => (
-                        <div key={road.id} className="payment-card">
-                            <div className="payment-card-header">
+                        <div key={road.id} className="paymentone-card">
+                            <div className="paymentone-card-header">
                                 <h4>{road.name}</h4>
                             </div>
-                            <div className="payment-card-body">
-                                <div className="payment-card-info">
+                            <div className="paymentone-card-body">
+                                <div className="paymentone-card-info">
                                     <p><strong>Скорость:</strong> {road.speed} км/ч</p>
-                                    <img src={road.image} alt={road.name} className="payment-road-img" />
+                                    <img src={road.image} alt={road.name} className="paymentone-road-img" />
                                     <p>
                                         <strong>День/Ночь: </strong>
                                         <button
-                                            className="payment-toggle-btn"
+                                            className="paymentone-toggle-btn"
                                             onClick={() => handleDayNightToggle(road.id, road.day_night)}
                                         >
                                             {road.day_night ? 'День' : 'Ночь'}
                                         </button>
                                     </p>
                                     <button
-                                        className="payment-delete-btn"
+                                        className="paymentone-delete-btn"
                                         onClick={() => handleDeleteRoad(road.id)}
                                     >
                                         Удалить
@@ -170,4 +175,4 @@ const PaymentPage: React.FC = () => {
     );
 };
 
-export default PaymentPage;
+export default PaymentPageOne;

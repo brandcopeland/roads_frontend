@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
-import { updatePayment, deletePayment, savePayment, fetchPayments } from '../redux/roadsSlice';
+// import { updatePayment, deletePayment, savePayment, fetchPayments } from '../redux/roadsSlice';
+import {  fetchPayments } from '../redux/roadsSlice';
 import Navbar from '../components/Navbar';
 import '../components/PaymentsListPage.css';
 import { useNavigate } from 'react-router-dom';
@@ -55,17 +56,17 @@ const PaymentsListPage: React.FC = () => {
         setEndDate(event.target.value);
     };
 
-    const handleUpdatePayment = (PaymentId: number) => {
-        dispatch(updatePayment(PaymentId));
-    };
+    // const handleUpdatePayment = (PaymentId: number) => {
+    //     dispatch(updatePayment(PaymentId));
+    // };
 
-    const handleDeletePayment = (PaymentId: number) => {
-        dispatch(deletePayment(PaymentId));
-    };
+    // const handleDeletePayment = (PaymentId: number) => {
+    //     dispatch(deletePayment(PaymentId));
+    // };
 
-    const handleSavePayment = (PaymentId: number) => {
-        dispatch(savePayment(PaymentId));
-    };
+    // const handleSavePayment = (PaymentId: number) => {
+    //     dispatch(savePayment(PaymentId));
+    // };
 
 
     const filteredPayments = payments.filter((payment) => {
@@ -112,7 +113,7 @@ const PaymentsListPage: React.FC = () => {
                                 <span>Номер оплаты</span>
                                 <span>Статус</span>
                                 <span>Дата формирования</span>
-                                <span>Время</span>
+                                <span>Время с транспондера</span>
                                 <span>Создатель</span>
                                 <span>Дата поездки</span>
                                 <span>Номер авто</span>
@@ -128,7 +129,7 @@ const PaymentsListPage: React.FC = () => {
                                     <span>{payment.date ?? 'Не указано'}</span>
                                     <span>{payment.number ?? 'Не указано'}</span>
                                     <div className="payments-actions">
-                                        <button onClick={() => navigate("/payment")}>Просмотр</button>
+                                        <button onClick={() => navigate(`/payment/${payment.id}`)}>Просмотр</button>
                                         {/* <button onClick={() => handleUpdatePayment(payment.id)}>Сформировать</button>
                                         <button onClick={() => handleDeletePayment(payment.id)}>Удалить заявку</button>
                                         <button onClick={() => console.log(' del m-m')}>Удалить М-М</button>

@@ -147,6 +147,7 @@ export const updateDayNightStatus = createAsyncThunk(
     'roads/updateDayNightStatus',
     async ({ draftPaymentId, roadId, currentStatus }: { draftPaymentId: string; roadId: number; currentStatus: boolean }, { rejectWithValue }) => {
         try {
+            console.log("updateDN", currentStatus, !currentStatus)
             const response = await axios.put(
                 `http://localhost:8000/api/payments/${draftPaymentId}/update_road/${roadId}/`,
                 { day_night: !currentStatus },
@@ -196,9 +197,19 @@ export const updatePayment = createAsyncThunk(
 export const deletePayment = createAsyncThunk(
     'roads/deletePayment',
     async (PaymentId: number, { rejectWithValue }) => {
+        // try {
+        //     const response = await axios.delete(
+        //         `http://localhost:8000/api/payments/${PaymentId}/delete/`,
+        //         { withCredentials: true }
+        //     );
+        //     return response.data;
+        // } catch (error: any) {
+        //     return rejectWithValue(error.response?.data?.message || 'Ошибка удаления оплаты');
+        // }
         try {
-            const response = await axios.delete(
-                `http://localhost:8000/api/payments/${PaymentId}/delete/`,
+            const response = await axios.put(
+                `http://localhost:8000/api/payments/${PaymentId}/update/`,
+                { status: 5 },
                 { withCredentials: true }
             );
             return response.data;
@@ -210,11 +221,11 @@ export const deletePayment = createAsyncThunk(
 
 export const savePayment = createAsyncThunk(
     'roads/savePayment',
-    async (PaymentId: number, { rejectWithValue }) => {
+    async ({ id, date, number }: { id: number; date: string; number: string }, { rejectWithValue }) => {
         try {
             const response = await axios.put(
-                `http://localhost:8000/api/payments/${PaymentId}/update_status_user/`,
-                {},
+                `http://localhost:8000/api/payments/${id}/update/`,
+                { date, number }, // Передача данных
                 { withCredentials: true }
             );
             return response.data;
@@ -223,6 +234,7 @@ export const savePayment = createAsyncThunk(
         }
     }
 );
+
 
 const roadsSlice = createSlice({
     name: 'roads',
